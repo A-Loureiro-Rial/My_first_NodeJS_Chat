@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Chat du pays des merveilles</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-body h-100 d-flex flex-column">
+            <h4 class="card-title m-2 text-info">Le super chat d'Alice! uwu</h4>
+            <ul id="messages" class="list-group"></ul>
+            <form action="" class="align-self-end">
+                <input id="m" autocomplete="off" /><button class="btn btn-info">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        var socket = io();
+        $(function ()
+        {
+            var socket = io();
+            $('form').submit(function(e)
+            {
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+            socket.on('chat message', function(msg)
+            {
+                var date = new Date(Date.UTC(2012, 11, 12, 3, 0, 0));
+                $('#messages').append($('<li class="list-group-item-info text-wrap w-50 shadow rounded p-2">').text("user" + " : " + msg + "   " + date.toLocaleDateString()));
+            });
+        });
+    </script>
+</body>
+</html>
